@@ -1,0 +1,9 @@
+title: "fREW Schmidt's Notes"
+author:
+  name: "Arthur Axel fREW Schmidt"
+  twitter: frioux
+indexes:
+  tag: 'tags'
+baseurl: 'https://frioux.github.io/notes'
+canonifyurls: false
+paginate: 50

@@ -1,0 +1,29 @@
+#!/bin/sh
+
+root="$1"
+
+failed_build() {
+   echo "Canary got into the build ($1); something is wrong"
+   echo "Current build is at $tmpdir"
+   exit 1
+}
+
+test -e ${root}posts/private-canary &&
+   failed_build 'expected location, private'
+
+git grep --no-index -q PRIVATECANARY &&
+   failed_build 'unexpected location, private'
+
+test -e ${root}posts/untagged-canary &&
+   failed_build 'expected location, untagged'
+
+git grep --no-index -q UNTAGGEDCANARY &&
+   failed_build 'unexpected location, untagged'
+
+test -e ${root}posts/both-canary &&
+   failed_build 'expected location, public&private'
+
+git grep --no-index -q BOTHCANARY &&
+   failed_build 'unexpected location, public&private'
+
+exit 0

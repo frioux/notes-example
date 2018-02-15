@@ -1,0 +1,18 @@
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <hr>
+      <footer id="footer">
+            <p class="pull-right"><a href="#top">Back to top</a></p>
+            <ul id="tags">
+              {{ range .Params.tags }}
+                <li><a href="/notes/tags/{{ . | urlize }}">{{ . }}</a> </li>
+              {{ end }}
+            <li><a href="/notes/tags">all tags</a></li>
+            </ul>
+      </footer>
+      </div>
+  </body>
+</html>

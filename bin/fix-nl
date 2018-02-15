@@ -1,0 +1,6 @@
+#!/bin/sh
+
+for file in $(git grep --name-only '\s+$' -- '*.md'); do
+   echo "Fixing $file"
+   <$file perl -p -e "s/\s+$/\n/gn" | sponge $file
+done

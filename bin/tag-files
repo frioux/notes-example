@@ -1,0 +1,8 @@
+#!/bin/dash
+
+exec bin/q \
+  --sql 'SELECT filename, title FROM _  WHERE tag = ? ORDER BY title COLLATE NOCASE' \
+  --format '"$r{filename}:1:$r{title}"' \
+  -- "$1"
+
+# vim: ft=sh

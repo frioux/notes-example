@@ -1,0 +1,19 @@
+{
+   "content/posts/*.md": {
+      "type": "post",
+      "template": [
+         "---",
+         "title: {capitalize|blank}",
+         "date: ~~CURDATE~~",
+         "tags: [  ]",
+         "guid: ~~GUID~~",
+         "---",
+         "",
+         "",
+         "<!--more-->"
+      ]
+   },
+   "content/posts/next-steps.md": {
+      "type": "ns"
+   }
+}

@@ -1,0 +1,32 @@
+#!/bin/sh
+
+set -e
+
+PATH="$PATH:$(pwd)/bin"
+tmpdir="$(mktemp -d --tmpdir public-notes.XXXXXXXXXX)"
+final_dir="$(pwd)/public/"
+
+# 1. copy infrastructure to tmpdir
+cp -r ./static/ ./layouts/ ./config.yaml "$tmpdir"
+
+# 2. copy posts tagged public to tmpdir
+mkdir -p "$tmpdir/content/posts"
+q --sql 'SELECT filename FROM articles a WHERE
+   EXISTS ( SELECT 1 FROM article_tag at WHERE a.guid = at.guid AND tag = ? )
+   AND NOT
+   EXISTS (SELECT 1 FROM article_tag at WHERE a.guid = at.guid AND tag = ?)
+   ' public private |
+   xargs -n50 -I{} cp {} "$tmpdir/content/posts"
+
+# 3. build
+cd $tmpdir
+hugo
+
+check-private 'public/'
+
+# 4. sync
+rm -rf "$final_dir/"*
+cp -r public/* "$final_dir/"
+
+cd ..
+rm -rf "$tmpdir"
